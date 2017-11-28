@@ -11,7 +11,7 @@ public final class CollectorFactory {
     public static <T> Collector<T, ?, T> toUniqueElement() {
         return Collectors.collectingAndThen(
                 toUniqueOptional(),
-                optionalResult -> optionalResult.orElseThrow(() -> {
+                optionalResult -> optionalResult.<IllegalStateException>orElseThrow(() -> {
                     throw new IllegalStateException("The stream was empty!");
                 })
         );

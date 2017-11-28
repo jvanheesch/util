@@ -9,9 +9,26 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <java.language.version>9</java.language.version>
+        <java.language.version>8</java.language.version>
         <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
+        <junit.version>4.12</junit.version>
+        <assertj.version>3.8.0</assertj.version>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj.version}</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>

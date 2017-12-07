@@ -7,15 +7,15 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 class BuilderImpl<T> implements Builder<T> {
-    private final Supplier<T> supplier;
+    private final Supplier<? extends T> supplier;
     private Consumer<T> config = Consumers.noop();
 
-    BuilderImpl(Supplier<T> supplier) {
+    BuilderImpl(Supplier<? extends T> supplier) {
         this.supplier = supplier;
     }
 
     @Override
-    public <C> Builder<T> with(BiConsumer<T, C> setter, C value) {
+    public <C> Builder<T> with(BiConsumer<? super T, ? super C> setter, C value) {
         this.config = this.config.andThen(t -> setter.accept(t, value));
         return this;
     }

@@ -15,6 +15,7 @@
         <wicket.version>7.9.0</wicket.version>
         <junit.version>4.12</junit.version>
         <assertj.version>3.8.0</assertj.version>
+        <apache-commons.version>3.7</apache-commons.version>
     </properties>
 
     <dependencies>
@@ -39,6 +40,11 @@
             <groupId>org.danekja</groupId>
             <artifactId>jdk-serializable-functional</artifactId>
             <version>1.8.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${apache-commons.version}</version>
         </dependency>
     </dependencies>
 

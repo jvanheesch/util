@@ -12,6 +12,7 @@
         <java.language.version>8</java.language.version>
         <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
         <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
+        <wicket.version>7.9.0</wicket.version>
         <junit.version>4.12</junit.version>
         <assertj.version>3.8.0</assertj.version>
     </properties>
@@ -27,6 +28,17 @@
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <version>${assertj.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.wicket</groupId>
+            <artifactId>wicket-core</artifactId>
+            <version>${wicket.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.danekja</groupId>
+            <artifactId>jdk-serializable-functional</artifactId>
+            <version>1.8.2</version>
         </dependency>
     </dependencies>
 

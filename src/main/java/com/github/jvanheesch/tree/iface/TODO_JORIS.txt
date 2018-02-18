@@ -1,0 +1,3 @@
+DataTreeNode adds behavior in a way that is "orthogonal" to MutableTreeNode.
+It should absolutely not extend MutableTreeNode.
+Ideally, Data and Mutability behavior could be implemented separately, and **COMPOSED** to a mutable-data-tree-node.

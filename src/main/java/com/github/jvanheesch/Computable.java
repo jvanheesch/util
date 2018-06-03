@@ -1,6 +1,7 @@
 package com.github.jvanheesch;
 
 import java.util.Optional;
+import java.util.function.Supplier;
 
 @FunctionalInterface
 public interface Computable<R> {
@@ -21,5 +22,9 @@ public interface Computable<R> {
         } catch (Throwable e) {
             return Optional.empty();
         }
+    }
+
+    static <R> Supplier<R> supplier(Computable<R> computable) {
+        return () -> compute(computable);
     }
 }

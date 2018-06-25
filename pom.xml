@@ -16,7 +16,13 @@
         <junit.version>4.12</junit.version>
         <assertj.version>3.8.0</assertj.version>
         <apache-commons.version>3.7</apache-commons.version>
+        <scm.provider.url>scm:git:git@github.com:jvanheesch/util.git</scm.provider.url>
     </properties>
+
+    <scm>
+        <connection>${scm.provider.url}</connection>
+        <developerConnection>${scm.provider.url}</developerConnection>
+    </scm>
 
     <dependencies>
         <dependency>

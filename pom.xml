@@ -19,6 +19,7 @@
         <scm.provider.url>scm:git:git@github.com:jvanheesch/util.git</scm.provider.url>
     </properties>
 
+
     <scm>
         <connection>${scm.provider.url}</connection>
         <developerConnection>${scm.provider.url}</developerConnection>

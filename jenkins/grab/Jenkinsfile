@@ -4,7 +4,7 @@ import org.apache.commons.lang3.StringUtils
 
 @Library('jenkins-shared-library') _
 def pom
-
+// Requires "Use groovy sandbox" unticked!
 pipeline {
     agent {
         label 'master'

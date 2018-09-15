@@ -1,0 +1,31 @@
+#!groovy​
+@Grab('org.apache.commons:commons-lang3:3.8')
+import org.apache.commons.lang3.StringUtils
+
+@Library('jenkins-shared-library') _
+def pom
+
+pipeline {
+    agent {
+        label 'master'
+    }
+
+    tools {
+        maven 'jenkins-maven-installation-3.5.4'
+    }
+
+    stages {
+        stage('LogWithScript') {
+            steps {
+                timestamps {
+                    script {
+                        log.info 'Starting'
+                        log.warning 'Nothing to do!'
+                        log.info StringUtils.isNotBlank("test")
+                        log.info StringUtils.isNotBlank("")
+                    }
+                }
+            }
+        }
+    }
+}

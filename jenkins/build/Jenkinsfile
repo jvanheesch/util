@@ -1,8 +1,5 @@
 #!groovy​
 
-@Grab('org.apache.commons:commons-lang3:3.8')
-import org.apache.commons.lang3.StringUtils
-
 @Library('jenkins-shared-library')
 def pom
 
@@ -31,8 +28,6 @@ pipeline {
                     script {
                         log.info 'Starting'
                         log.warning 'Nothing to do!'
-                        log.info StringUtils.isNotBlank("test")
-                        log.info StringUtils.isNotBlank("")
                     }
                 }
             }

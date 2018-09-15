@@ -22,6 +22,22 @@ pipeline {
                 }
             }
         }
+        stage('LogWithScript') {
+            steps {
+                timestamps {
+                    script {
+                        log.info 'Starting'
+                        log.warning 'Nothing to do!'
+                    }
+                }
+            }
+        }
+        stage('LogWithoutScript') {
+            steps {
+                log.info 'Starting'
+                log.warning 'Nothing to do!'
+            }
+        }
     }
     post {
         failure {

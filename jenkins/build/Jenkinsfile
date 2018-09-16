@@ -8,6 +8,13 @@ pipeline {
         label 'master'
     }
 
+    options {
+        logRotator {
+            numToKeep(5)
+            artifactNumToKeep(1)
+        }
+    }
+
     tools {
         maven 'jenkins-maven-installation-3.5.4'
     }

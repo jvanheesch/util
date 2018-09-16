@@ -8,6 +8,10 @@ pipeline {
         label 'master'
     }
 
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '1'))
+    }
+
     tools {
         maven 'jenkins-maven-installation-3.5.4'
     }

@@ -4,7 +4,7 @@ import com.github.jvanheesch.tree.iface.DataTreeNode;
 import com.github.jvanheesch.tree.iface.SimpleNamedNode;
 import com.github.jvanheesch.tree.impl.SimpleNamedNodeImpl;
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.stream.Collectors;

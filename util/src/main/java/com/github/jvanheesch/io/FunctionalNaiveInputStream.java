@@ -17,6 +17,10 @@ public class FunctionalNaiveInputStream extends InputStream {
         return this.nextByteSupplier.read();
     }
 
+    public static FunctionalNaiveInputStream ofIterator(Iterator<Byte> iterator) {
+        return new FunctionalNaiveInputStream(NextByteSupplier.ofIterator(iterator));
+    }
+
     @FunctionalInterface
     public interface NextByteSupplier {
         int read() throws IOException;

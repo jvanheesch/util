@@ -11,17 +11,15 @@ class FunctionalNaiveInputStreamTest {
 
     @Test
     void basicExample() throws IOException {
-        FunctionalNaiveInputStream functionalNaiveInputStream = new FunctionalNaiveInputStream(
-                FunctionalNaiveInputStream.NextByteSupplier.ofIterator(
-                        Stream
-                                .iterate(
-                                        0,
-                                        n -> n + 1
-                                )
-                                .limit(10)
-                                .map(i -> (byte) i.intValue())
-                                .iterator()
-                )
+        FunctionalNaiveInputStream functionalNaiveInputStream = FunctionalNaiveInputStream.ofIterator(
+                Stream
+                        .iterate(
+                                0,
+                                n -> n + 1
+                        )
+                        .limit(10)
+                        .map(i -> (byte) i.intValue())
+                        .iterator()
         );
 
         byte[] result = new byte[10];

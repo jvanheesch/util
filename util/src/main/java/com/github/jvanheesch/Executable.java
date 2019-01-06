@@ -24,4 +24,9 @@ public interface Executable {
             throw new RuntimeException(e);
         }
     }
+
+    public static Executable noop() {
+        return () -> {
+        };
+    }
 }

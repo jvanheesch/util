@@ -1,65 +1,24 @@
 package com.github.jvanheesch.io;
 
-import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-/**
- * All read methods, including readLine(), are built on the primitive read() method.
- */
-public class InterceptorServletInputStream extends ServletInputStream {
-    private final ServletInputStream in;
+public class InterceptorServletInputStream extends SingleReadForwardingServletInputStream {
     private final OutputStream out;
 
-    public InterceptorServletInputStream(ServletInputStream in, OutputStream out) {
-        this.in = in;
+    public InterceptorServletInputStream(ServletInputStream underlyingInputStream, OutputStream out) {
+        super(underlyingInputStream);
+
         this.out = out;
     }
 
-    @Override
-    public long skip(long n) throws IOException {
-        return this.in.skip(n);
-    }
-
-    @Override
-    public int available() throws IOException {
-        return this.in.available();
-    }
-
-    @Override
-    public synchronized void mark(int readlimit) {
-        this.in.mark(readlimit);
-    }
-
-    @Override
-    public synchronized void reset() throws IOException {
-        this.in.reset();
-    }
-
-    @Override
-    public boolean markSupported() {
-        return this.in.markSupported();
-    }
-
-    @Override
-    public boolean isFinished() {
-        return this.in.isFinished();
-    }
-
-    @Override
-    public boolean isReady() {
-        return this.in.isReady();
-    }
-
-    @Override
-    public void setReadListener(ReadListener readListener) {
-        this.in.setReadListener(readListener);
-    }
-
+    /**
+     * All read methods, including readLine(), are built on top off the primitive read() method.
+     */
     @Override
     public int read() throws IOException {
-        int nextByteAsInt = this.in.read();
+        int nextByteAsInt = super.read();
 
         if (nextByteAsInt != -1) {
             this.out.write(nextByteAsInt);
@@ -68,9 +27,15 @@ public class InterceptorServletInputStream extends ServletInputStream {
         return nextByteAsInt;
     }
 
+    /**
+     * If out.close() is unwanted, it should be wrapped with {@link IOStreams#closeNoOpOutputStreamWrapper(OutputStream)}.
+     */
     @Override
     public void close() throws IOException {
-        this.in.close();
+        super.close();
+
         this.out.flush();
+
+        this.out.close();
     }
 }

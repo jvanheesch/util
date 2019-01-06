@@ -3,33 +3,38 @@ package com.github.jvanheesch.io;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class InterceptorOutputStream extends OutputStream {
-    private final OutputStream original;
-    private final OutputStream captured;
+public class InterceptorOutputStream extends SingleWriteForwardingOutputStream {
+    private final OutputStream out;
 
-    public InterceptorOutputStream(OutputStream original, OutputStream captured) {
-        this.original = original;
-        this.captured = captured;
+    public InterceptorOutputStream(OutputStream underlyingOutputStream, OutputStream out) {
+        super(underlyingOutputStream);
+
+        this.out = out;
     }
 
     @Override
     public void write(int b) throws IOException {
-        this.original.write(b);
-        this.captured.write(b);
+        super.write(b);
+
+        this.out.write(b);
     }
 
     @Override
     public void flush() throws IOException {
-        this.original.flush();
-        this.captured.flush();
+        super.flush();
+
+        this.out.flush();
     }
 
     /**
-     * Close should probably close the original outputstream, as it serves as a proxy/substitute.
-     * It should probably not close the other outputstream, as that might render it useless.
+     * If out.close() is unwanted, it should be wrapped with {@link IOStreams#closeNoOpOutputStreamWrapper(OutputStream)}.
      */
     @Override
     public void close() throws IOException {
-        this.original.close();
+        super.close();
+
+        this.out.flush();
+
+        this.out.close();
     }
 }

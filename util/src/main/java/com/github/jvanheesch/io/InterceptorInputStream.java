@@ -56,5 +56,7 @@ public class InterceptorInputStream extends InputStream {
     @Override
     public void close() throws IOException {
         this.in.close();
+        // TODO_JORIS: might make more sense to flush on each ead.
+        this.out.flush();
     }
 }

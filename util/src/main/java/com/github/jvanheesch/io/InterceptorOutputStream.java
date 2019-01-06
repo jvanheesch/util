@@ -21,6 +21,7 @@ public class InterceptorOutputStream extends OutputStream {
     @Override
     public void flush() throws IOException {
         this.original.flush();
+        this.captured.flush();
     }
 
     /**

@@ -1,12 +1,32 @@
 package com.github.jvanheesch.io;
 
 import com.github.jvanheesch.Executable;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.io.IoBuilder;
 
+import javax.servlet.ServletInputStream;
+import javax.servlet.ServletOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
 public final class IOStreams {
     private IOStreams() {
+    }
+
+    public static InputStream logInput(InputStream inputStream, Logger logger) {
+        return new InterceptorInputStream(inputStream, IoBuilder.forLogger(logger).buildOutputStream());
+    }
+
+    public static ServletInputStream logInput(ServletInputStream inputStream, Logger logger) {
+        return new InterceptorServletInputStream(inputStream, IoBuilder.forLogger(logger).buildOutputStream());
+    }
+
+    public static OutputStream logOutput(OutputStream outputStream, Logger logger) {
+        return new InterceptorOutputStream(outputStream, IoBuilder.forLogger(logger).buildOutputStream());
+    }
+
+    public static ServletOutputStream logOutput(ServletOutputStream outputStream, Logger logger) {
+        return new InterceptorServletOutputStream(outputStream, IoBuilder.forLogger(logger).buildOutputStream());
     }
 
     public static InputStream closeNoOpOutputStreamWrapper(InputStream inputStream) {

@@ -7,7 +7,7 @@ package com.github.jvanheesch;
 public interface Executable {
     void execute() throws Throwable;
 
-    static Runnable supplier(Executable executable) {
+    static Runnable runnable(Executable executable) {
         return () -> {
             try {
                 executable.execute();

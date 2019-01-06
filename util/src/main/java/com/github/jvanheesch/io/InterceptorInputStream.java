@@ -24,6 +24,31 @@ public class InterceptorInputStream extends InputStream {
         return nextByteAsInt;
     }
 
+    @Override
+    public long skip(long n) throws IOException {
+        return this.in.skip(n);
+    }
+
+    @Override
+    public int available() throws IOException {
+        return this.in.available();
+    }
+
+    @Override
+    public synchronized void mark(int readlimit) {
+        this.in.mark(readlimit);
+    }
+
+    @Override
+    public synchronized void reset() throws IOException {
+        this.in.reset();
+    }
+
+    @Override
+    public boolean markSupported() {
+        return this.in.markSupported();
+    }
+
     /**
      * Close should probably close the inputstream, as it serves as a proxy/substitute.
      * It should probably not close the ouputstream, as that might render it useless.

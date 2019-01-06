@@ -18,6 +18,11 @@ public class InterceptorOutputStream extends OutputStream {
         this.captured.write(b);
     }
 
+    @Override
+    public void flush() throws IOException {
+        this.original.flush();
+    }
+
     /**
      * Close should probably close the original outputstream, as it serves as a proxy/substitute.
      * It should probably not close the other outputstream, as that might render it useless.

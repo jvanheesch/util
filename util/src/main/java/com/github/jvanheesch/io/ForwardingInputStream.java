@@ -4,24 +4,24 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * Methods {@link InputStream#read(byte[])} and {@link InputStream#read(byte[], int, int)} are NOT overridden.
- * This causes ALL read calls to pass {@link InputStream#read(byte[])}
+ * This class is purely method-forwarding boilerplate:
+ * every method declared in InputStream is forwarded to underlyingInputStream.
  */
-public class SingleReadForwardingInputStream extends InputStream {
+public class ForwardingInputStream extends InputStream {
     private final InputStream underlyingInputStream;
 
-    public SingleReadForwardingInputStream(InputStream underlyingInputStream) {
+    public ForwardingInputStream(InputStream underlyingInputStream) {
         this.underlyingInputStream = underlyingInputStream;
     }
 
     @Override
-    public final int read(byte[] b) throws IOException {
-        return super.read(b);
+    public int read(byte[] b) throws IOException {
+        return this.underlyingInputStream.read(b);
     }
 
     @Override
-    public final int read(byte[] b, int off, int len) throws IOException {
-        return super.read(b, off, len);
+    public int read(byte[] b, int off, int len) throws IOException {
+        return this.underlyingInputStream.read(b, off, len);
     }
 
     @Override

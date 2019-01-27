@@ -34,7 +34,7 @@ public final class IOStreams {
     }
 
     public static InputStream replaceCloseAction(InputStream inputStream, Executable onClose) {
-        return new SingleReadForwardingInputStream(inputStream) {
+        return new ForwardingInputStream(inputStream) {
             @Override
             public void close() {
                 Executable.executeSilently(onClose);

@@ -3,21 +3,21 @@ package com.github.jvanheesch.io;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class SingleWriteForwardingOutputStream extends OutputStream {
+public class ForwardingOutputStream extends OutputStream {
     private final OutputStream underlyingOutputStream;
 
-    public SingleWriteForwardingOutputStream(OutputStream underlyingOutputStream) {
+    public ForwardingOutputStream(OutputStream underlyingOutputStream) {
         this.underlyingOutputStream = underlyingOutputStream;
     }
 
     @Override
-    public final void write(byte[] b) throws IOException {
-        super.write(b);
+    public void write(byte[] b) throws IOException {
+        this.underlyingOutputStream.write(b);
     }
 
     @Override
-    public final void write(byte[] b, int off, int len) throws IOException {
-        super.write(b, off, len);
+    public void write(byte[] b, int off, int len) throws IOException {
+        this.underlyingOutputStream.write(b, off, len);
     }
 
     @Override

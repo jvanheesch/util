@@ -61,7 +61,7 @@ public final class IOStreams {
     }
 
     public static OutputStream replaceCloseAction(OutputStream outputStream, Executable onClose) {
-        return new SingleWriteForwardingOutputStream(outputStream) {
+        return new ForwardingOutputStream(outputStream) {
             @Override
             public void close() {
                 Executable.executeSilently(onClose);

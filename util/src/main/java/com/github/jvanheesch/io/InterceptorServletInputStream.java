@@ -4,7 +4,7 @@ import javax.servlet.ServletInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class InterceptorServletInputStream extends SingleReadForwardingServletInputStream {
+public class InterceptorServletInputStream extends ForwardingServletInputStream {
     private final OutputStream out;
 
     public InterceptorServletInputStream(ServletInputStream underlyingInputStream, OutputStream out) {
@@ -13,9 +13,42 @@ public class InterceptorServletInputStream extends SingleReadForwardingServletIn
         this.out = out;
     }
 
-    /**
-     * All read methods, including readLine(), are built on top off the primitive read() method.
-     */
+    @Override
+    public int readLine(byte[] b, int off, int len) throws IOException {
+        int nbOfBytesRead = super.readLine(b, off, len);
+
+        if (nbOfBytesRead != -1) {
+            // write the bytes, read into b, to out
+            this.out.write(b, 0, nbOfBytesRead);
+        }
+
+        return nbOfBytesRead;
+    }
+
+    @Override
+    public int read(byte[] b) throws IOException {
+        int nbOfBytesRead = super.read(b);
+
+        if (nbOfBytesRead != -1) {
+            // write the bytes, read into b, to out
+            this.out.write(b, 0, nbOfBytesRead);
+        }
+
+        return nbOfBytesRead;
+    }
+
+    @Override
+    public int read(byte[] b, int off, int len) throws IOException {
+        int nbOfBytesRead = super.read(b, off, len);
+
+        if (nbOfBytesRead != -1) {
+            // write the bytes, read into b, to out
+            this.out.write(b, off, nbOfBytesRead);
+        }
+
+        return nbOfBytesRead;
+    }
+
     @Override
     public int read() throws IOException {
         int nextByteAsInt = super.read();
@@ -28,6 +61,7 @@ public class InterceptorServletInputStream extends SingleReadForwardingServletIn
     }
 
     /**
+     * TODO_JORIS
      * If out.close() is unwanted, it should be wrapped with {@link IOStreams#closeNoOpOutputStreamWrapper(OutputStream)}.
      */
     @Override

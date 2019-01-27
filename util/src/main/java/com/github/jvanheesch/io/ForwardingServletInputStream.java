@@ -4,26 +4,26 @@ import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import java.io.IOException;
 
-public class SingleReadForwardingServletInputStream extends ServletInputStream {
+public class ForwardingServletInputStream extends ServletInputStream {
     private final ServletInputStream underlyingInputStream;
 
-    public SingleReadForwardingServletInputStream(ServletInputStream underlyingInputStream) {
+    public ForwardingServletInputStream(ServletInputStream underlyingInputStream) {
         this.underlyingInputStream = underlyingInputStream;
     }
 
     @Override
-    public final int readLine(byte[] b, int off, int len) throws IOException {
-        return super.readLine(b, off, len);
+    public int readLine(byte[] b, int off, int len) throws IOException {
+        return this.underlyingInputStream.readLine(b, off, len);
     }
 
     @Override
-    public final int read(byte[] b) throws IOException {
-        return super.read(b);
+    public int read(byte[] b) throws IOException {
+        return this.underlyingInputStream.read(b);
     }
 
     @Override
-    public final int read(byte[] b, int off, int len) throws IOException {
-        return super.read(b, off, len);
+    public int read(byte[] b, int off, int len) throws IOException {
+        return this.underlyingInputStream.read(b, off, len);
     }
 
     @Override

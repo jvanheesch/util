@@ -4,14 +4,10 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.WriteListener;
 import java.io.IOException;
 
-/**
- * In principle, it might make more sense to make this class singlePrint (just like singleWrite),
- * but I currently don't care about print.
- */
-public class SingleWriteForwardingServletOutputStream extends ServletOutputStream {
+public class ForwardingServletOutputStream extends ServletOutputStream {
     private final ServletOutputStream underlyingServletOutputStream;
 
-    public SingleWriteForwardingServletOutputStream(ServletOutputStream underlyingServletOutputStream) {
+    public ForwardingServletOutputStream(ServletOutputStream underlyingServletOutputStream) {
         this.underlyingServletOutputStream = underlyingServletOutputStream;
     }
 
@@ -101,13 +97,13 @@ public class SingleWriteForwardingServletOutputStream extends ServletOutputStrea
     }
 
     @Override
-    public final void write(byte[] b) throws IOException {
-        super.write(b);
+    public void write(byte[] b) throws IOException {
+        this.underlyingServletOutputStream.write(b);
     }
 
     @Override
-    public final void write(byte[] b, int off, int len) throws IOException {
-        super.write(b, off, len);
+    public void write(byte[] b, int off, int len) throws IOException {
+        this.underlyingServletOutputStream.write(b, off, len);
     }
 
     @Override

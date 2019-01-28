@@ -1,16 +1,24 @@
 package com.github.jvanheesch.io;
 
+import com.github.jvanheesch.Executable;
+
 import javax.servlet.ServletOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
 public class InterceptorServletOutputStream extends ForwardingServletOutputStream {
     private final OutputStream out;
+    private final Executable onCloseCallback;
 
-    public InterceptorServletOutputStream(ServletOutputStream underlyingServletOutputStream, OutputStream out) {
+    public InterceptorServletOutputStream(
+            ServletOutputStream underlyingServletOutputStream,
+            OutputStream out,
+            Executable onCloseCallback
+    ) {
         super(underlyingServletOutputStream);
 
         this.out = out;
+        this.onCloseCallback = onCloseCallback;
     }
 
     @Override
@@ -41,14 +49,10 @@ public class InterceptorServletOutputStream extends ForwardingServletOutputStrea
         this.out.flush();
     }
 
-    /**
-     * TODO_JORIS
-     * If out.close() is unwanted, it should be wrapped with {@link IOStreams#closeNoOpOutputStreamWrapper(OutputStream)}.
-     */
     @Override
     public void close() throws IOException {
         super.close();
 
-        this.out.flush();
+        this.onCloseCallback.executeSilently();
     }
 }

@@ -18,7 +18,8 @@ public final class IOStreams {
     }
 
     public static ServletInputStream logInput(ServletInputStream inputStream, Logger logger) {
-        return new InterceptorServletInputStream(inputStream, IoBuilder.forLogger(logger).buildOutputStream());
+        OutputStream out = IoBuilder.forLogger(logger).buildOutputStream();
+        return new InterceptorServletInputStream(inputStream, out, out::close);
     }
 
     public static OutputStream logOutput(OutputStream outputStream, Logger logger) {
@@ -26,7 +27,8 @@ public final class IOStreams {
     }
 
     public static ServletOutputStream logOutput(ServletOutputStream outputStream, Logger logger) {
-        return new InterceptorServletOutputStream(outputStream, IoBuilder.forLogger(logger).buildOutputStream());
+        OutputStream out = IoBuilder.forLogger(logger).buildOutputStream();
+        return new InterceptorServletOutputStream(outputStream, out, out::close);
     }
 
     public static InputStream closeNoOpOutputStreamWrapper(InputStream inputStream) {

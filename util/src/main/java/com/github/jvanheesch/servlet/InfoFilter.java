@@ -66,29 +66,47 @@ public class InfoFilter extends HttpFilter {
 
         LOGGER.info("InfoFilter - end. ");
 
-        chain.doFilter(
-                new HttpServletRequestWrapper(request) {
-                    @Override
-                    public ServletInputStream getInputStream() throws IOException {
-                        return IOStreams.logInput(request.getInputStream(), LOGGER);
-                    }
+        // TODO_JORIS: close will break when async, but kept simple for now.
+        try (
+                ServletInputStream servletInputStream = IOStreams.logInput(request.getInputStream(), LOGGER);
+                ServletOutputStream servletOutputStream = IOStreams.logOutput(response.getOutputStream(), LOGGER);
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(servletInputStream));
+                PrintWriter printWriter = new PrintWriter(servletOutputStream)
+        ) {
 
-                    @Override
-                    public BufferedReader getReader() throws IOException {
-                        return new BufferedReader(new InputStreamReader(this.getInputStream()));
-                    }
-                },
-                new HttpServletResponseWrapper(response) {
-                    @Override
-                    public ServletOutputStream getOutputStream() throws IOException {
-                        return IOStreams.logOutput(response.getOutputStream(), LOGGER);
-                    }
-
-                    @Override
-                    public PrintWriter getWriter() throws IOException {
-                        return new PrintWriter(this.getOutputStream());
-                    }
+            HttpServletRequestWrapper wrappedRequest = new HttpServletRequestWrapper(request) {
+                @Override
+                public ServletInputStream getInputStream() throws IOException {
+                    return servletInputStream;
                 }
-        );
+
+                @Override
+                public BufferedReader getReader() throws IOException {
+                    return bufferedReader;
+                }
+            };
+            HttpServletResponseWrapper wrappedResponse = new HttpServletResponseWrapper(response) {
+                @Override
+                public ServletOutputStream getOutputStream() throws IOException {
+                    return servletOutputStream;
+                }
+
+                @Override
+                public PrintWriter getWriter() throws IOException {
+                    return printWriter;
+                }
+
+                @Override
+                public void flushBuffer() throws IOException {
+                    response.flushBuffer();
+                    servletOutputStream.flush();
+                }
+            };
+
+            chain.doFilter(
+                    wrappedRequest,
+                    wrappedResponse
+            );
+        }
     }
 }

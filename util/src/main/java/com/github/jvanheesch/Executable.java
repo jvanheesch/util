@@ -17,9 +17,9 @@ public interface Executable {
         };
     }
 
-    static void executeSilently(Executable executable) {
+    default void executeSilently() {
         try {
-            executable.execute();
+            this.execute();
         } catch (Throwable e) {
             throw new RuntimeException(e);
         }

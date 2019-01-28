@@ -37,21 +37,21 @@ public final class IOStreams {
         return new ForwardingInputStream(inputStream) {
             @Override
             public void close() {
-                Executable.executeSilently(onClose);
+                onClose.executeSilently();
             }
         };
     }
 
     public static InputStream onBeforeClose(InputStream inputStream, Executable onBeforeClose) {
         return replaceCloseAction(inputStream, () -> {
-            Executable.executeSilently(onBeforeClose);
+            onBeforeClose.executeSilently();
             inputStream.close();
         });
     }
 
     public static InputStream onAfterClose(InputStream inputStream, Executable onAfterClose) {
         return replaceCloseAction(inputStream, () -> {
-            Executable.executeSilently(onAfterClose);
+            onAfterClose.executeSilently();
             inputStream.close();
         });
     }
@@ -64,21 +64,21 @@ public final class IOStreams {
         return new ForwardingOutputStream(outputStream) {
             @Override
             public void close() {
-                Executable.executeSilently(onClose);
+                onClose.executeSilently();
             }
         };
     }
 
     public static OutputStream onBeforeClose(OutputStream outputStream, Executable onBeforeClose) {
         return replaceCloseAction(outputStream, () -> {
-            Executable.executeSilently(onBeforeClose);
+            onBeforeClose.executeSilently();
             outputStream.close();
         });
     }
 
     public static OutputStream onAfterClose(OutputStream outputStream, Executable onAfterClose) {
         return replaceCloseAction(outputStream, () -> {
-            Executable.executeSilently(onAfterClose);
+            onAfterClose.executeSilently();
             outputStream.close();
         });
     }

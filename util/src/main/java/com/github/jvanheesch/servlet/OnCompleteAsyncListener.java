@@ -8,7 +8,7 @@ import java.util.function.Consumer;
 class OnCompleteAsyncListener implements AsyncListener {
     private final Consumer<AsyncEvent> onCompleteAction;
 
-    private OnCompleteAsyncListener(Consumer<AsyncEvent> onCompleteAction) {
+    OnCompleteAsyncListener(Consumer<AsyncEvent> onCompleteAction) {
         this.onCompleteAction = onCompleteAction;
     }
 

@@ -29,9 +29,6 @@ public class InfoFilter extends AbstractHttpFilter {
         println("InfoFilter - start. ");
         println(String.format("RequestURI: %s ", request.getRequestURI()));
         println(String.format("Method: %s ", request.getMethod()));
-        println(String.format("ContextPath: %s ", request.getContextPath()));
-        println(String.format("ServletPath: %s ", request.getServletPath()));
-        println(String.format("PathInfo: %s ", request.getPathInfo()));
         println(String.format("DispatcherType: %s ", request.getDispatcherType()));
         println(String.format("Protocol: %s ", request.getProtocol()));
         println(String.format("LocalAddr: %s ", request.getLocalAddr()));
@@ -63,9 +60,6 @@ public class InfoFilter extends AbstractHttpFilter {
             String paramName = parameterNames.nextElement();
             println(String.format("  %s: %s ", paramName, request.getParameter(paramName)));
         }
-        ServletContext servletContext = request.getServletContext();
-        println(String.format("ServletContext: %s ", servletContext));
-        println(String.format("  EffectiveMajorVersion: %s ", servletContext.getEffectiveMajorVersion()));
 
         println("InfoFilter - end. ");
 

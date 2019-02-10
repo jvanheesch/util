@@ -2,31 +2,34 @@ package com.github.jvanheesch.servlet;
 
 import com.github.jvanheesch.Executable;
 import com.github.jvanheesch.io.InterceptorServletInputStream;
-import com.github.jvanheesch.io.InterceptorServletOutputStream;
 
-import javax.servlet.*;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Enumeration;
 
-public class InfoFilter extends AbstractHttpFilter {
+public class RequestInfoFilter extends AbstractHttpFilter {
     private final OutputStream out;
 
-    public InfoFilter() {
+    public RequestInfoFilter() {
         this(System.out);
     }
 
-    public InfoFilter(OutputStream out) {
+    public RequestInfoFilter(OutputStream out) {
         this.out = out;
     }
 
     @Override
     protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        println("InfoFilter - start. ");
+        println("RequestInfoFilter - start. ");
         println(String.format("RequestURI: %s ", request.getRequestURI()));
         println(String.format("Method: %s ", request.getMethod()));
         println(String.format("DispatcherType: %s ", request.getDispatcherType()));
@@ -61,12 +64,10 @@ public class InfoFilter extends AbstractHttpFilter {
             println(String.format("  %s: %s ", paramName, request.getParameter(paramName)));
         }
 
-        println("InfoFilter - end. ");
+        println("RequestInfoFilter - end. ");
 
         ServletInputStream servletInputStream = new InterceptorServletInputStream(request.getInputStream(), out, Executable.noop());
-        ServletOutputStream servletOutputStream = new InterceptorServletOutputStream(response.getOutputStream(), out, Executable.noop());
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(servletInputStream));
-        PrintWriter printWriter = new PrintWriter(servletOutputStream);
 
         HttpServletRequestWrapper wrappedRequest = new HttpServletRequestWrapper(request) {
             @Override
@@ -79,21 +80,10 @@ public class InfoFilter extends AbstractHttpFilter {
                 return bufferedReader;
             }
         };
-        HttpServletResponseWrapper wrappedResponse = new HttpServletResponseWrapper(response) {
-            @Override
-            public ServletOutputStream getOutputStream() throws IOException {
-                return servletOutputStream;
-            }
-
-            @Override
-            public PrintWriter getWriter() throws IOException {
-                return printWriter;
-            }
-        };
 
         chain.doFilter(
                 wrappedRequest,
-                wrappedResponse
+                response
         );
 
         if (wrappedRequest.isAsyncStarted()) {
@@ -103,11 +93,9 @@ public class InfoFilter extends AbstractHttpFilter {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                printWriter.close();
             }));
         } else {
             bufferedReader.close();
-            printWriter.close();
         }
     }
 

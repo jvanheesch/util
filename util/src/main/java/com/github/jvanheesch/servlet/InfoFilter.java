@@ -32,9 +32,6 @@ public class InfoFilter extends AbstractHttpFilter {
         println(String.format("ContextPath: %s ", request.getContextPath()));
         println(String.format("ServletPath: %s ", request.getServletPath()));
         println(String.format("PathInfo: %s ", request.getPathInfo()));
-        println(String.format("ContentType: %s ", request.getContentType()));
-        println(String.format("CharacterEncoding: %s ", request.getCharacterEncoding()));
-        println(String.format("ContentLengthLong: %s ", request.getContentLengthLong()));
         println(String.format("DispatcherType: %s ", request.getDispatcherType()));
         println(String.format("Protocol: %s ", request.getProtocol()));
         println(String.format("LocalAddr: %s ", request.getLocalAddr()));
@@ -45,8 +42,6 @@ public class InfoFilter extends AbstractHttpFilter {
         println(String.format("RemotePort: %s ", request.getRemotePort()));
         println(String.format("RemoteUser: %s ", request.getRemoteUser()));
         println(String.format("Scheme: %s ", request.getScheme()));
-        println(String.format("ServerName: %s ", request.getServerName()));
-        println(String.format("ServerPort: %s ", request.getServerPort()));
         println(String.format("Secure: %s ", request.isSecure()));
         println(String.format("Cookies: %s ", Arrays.toString(request.getCookies())));
         println("Headers: ");

@@ -10,6 +10,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <modules>
+        <module>spring-autoconfiguration</module>
         <module>util</module>
         <module>test-util</module>
     </modules>

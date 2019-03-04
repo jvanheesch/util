@@ -29,7 +29,7 @@ public class RequestInfoFilter extends AbstractHttpFilter {
 
     @Override
     protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        println("RequestInfoFilter - start. ");
+        println(String.format("RequestInfoFilter - start @ %d", System.currentTimeMillis()));
         println(String.format("RequestURI: %s ", request.getRequestURI()));
         println(String.format("Method: %s ", request.getMethod()));
         println(String.format("DispatcherType: %s ", request.getDispatcherType()));

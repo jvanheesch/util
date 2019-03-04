@@ -6,6 +6,13 @@ import javax.servlet.ServletInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+/**
+ * TODO_JORIS:
+ * onCloseCallback() doesn't really make sense.
+ * The general rule is that "the code that creates a resource is also responsible for closing it.".
+ * Therefore, since WE create InterceptorServletInputStream, WE are responsible for closing it,
+ * so a callback doesn't really make sense...
+ */
 public class InterceptorServletInputStream extends ForwardingServletInputStream {
     private final OutputStream out;
     private final Executable onCloseCallback;

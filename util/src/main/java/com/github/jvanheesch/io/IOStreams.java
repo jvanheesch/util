@@ -17,6 +17,7 @@ public final class IOStreams {
         return new InterceptorInputStream(inputStream, IoBuilder.forLogger(logger).buildOutputStream());
     }
 
+    // TODO_JORIS: not sure if it's OK
     public static ServletInputStream logInput(ServletInputStream inputStream, Logger logger) {
         OutputStream out = IoBuilder.forLogger(logger).buildOutputStream();
         return new InterceptorServletInputStream(inputStream, out, out::close);

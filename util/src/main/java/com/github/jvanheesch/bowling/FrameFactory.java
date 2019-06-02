@@ -32,14 +32,10 @@ public class FrameFactory {
 
         @Override
         public void roll(int numberOfPins) {
-            if (numberOfPins < 0) {
-                throw new IllegalArgumentException();
-            }
             if (this.isCompleted()) {
                 throw new IllegalStateException();
             }
-            // TODO_JORIS: command pattern & undo/rollback with immutability?
-            if (this.getTotalNumberOfPinsKnockedDown() + numberOfPins > 10) {
+            if (numberOfPins < 0 || numberOfPins > 10 - this.getTotalNumberOfPinsKnockedDown()) {
                 throw new IllegalArgumentException();
             }
 

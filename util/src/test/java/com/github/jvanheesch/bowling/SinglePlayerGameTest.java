@@ -85,4 +85,29 @@ class SinglePlayerGameTest {
         assertThat(game.score())
                 .isEqualTo(23);
     }
+
+    @Test
+    void test_spare_in_final_frame() {
+        SinglePlayerGame game = new SinglePlayerGame();
+
+        IntStream.generate(() -> 0)
+                .limit(18)
+                .forEach(game::roll);
+
+        assertThat(game.score())
+                .isEqualTo(0);
+
+        game.roll(8);
+        game.roll(2);
+        game.roll(10);
+
+        assertThat(game.isFinished())
+                .isTrue();
+
+        assertThat(game.score())
+                .isEqualTo(8 + 2 + 10);
+
+        assertThatThrownBy(() -> game.roll(1))
+                .isInstanceOf(IllegalStateException.class);
+    }
 }

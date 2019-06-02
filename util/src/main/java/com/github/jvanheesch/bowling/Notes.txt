@@ -1,5 +1,14 @@
 
 =====================================================================
+undoability van command pattern komt FOR FREE wnn we met immutable
+objects werken
+=====================================================================
+Example:
+BigDecimal.add returns new BigDecimal.
+-> undo: return input rather than output !
+
+
+=====================================================================
 =====================================================================
 Stel elke roll is een command, dat on execute een frame gaat modifyen
 (en evt next frame createn)?

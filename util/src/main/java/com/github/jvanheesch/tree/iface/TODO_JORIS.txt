@@ -1,3 +1,18 @@
 DataTreeNode adds behavior in a way that is "orthogonal" to MutableTreeNode.
 It should absolutely not extend MutableTreeNode.
 Ideally, Data and Mutability behavior could be implemented separately, and **COMPOSED** to a mutable-data-tree-node.
+Achieve orthogonality by DECLARING behavior (rather than implementing), e.g. using builder pattern.
+Issue: multiple impls/conflicting signatures
+-> how to fix?
+-> java language not strong enough I think ?
+-> also the issue: typesafe language
+    -> n behaviors
+    -> 2ˆn types
+    -> solution: handle typesafety with visitor?
+       note: visitor's visit methods should not be overloaded,
+       because that's super unintuitive when method is overridden with super class.
+    -> mss niet exact visitor, maar general idea is wel:
+       i.p.v. we kunnen type niet gebruiken, want we kunnen niet voor alle combinaties een type defininen.
+       We kunnen echter wel code schrijve die basically volgende encapsulate:
+       if (node instanceof X) { ... } else { ... }
+

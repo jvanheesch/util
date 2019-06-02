@@ -1,0 +1,47 @@
+intent:
+create a builder such that:
+- builder.stuff() returns compile time type of builder, which may have been reduced to optionX + otherstuff
+- somebuilder.optionx() reduces compile time type of builder
+dwz dat:
+- initBuilder.stuff() returnt typeof(initBuilder)
+- initBuilder.optionx() returnt typeof(filterdBuilder)
+- initbuilder().optionx.().stuff() returnt typeof(filteredBuilder)
+Dat lukt niet in typesystem ALS WE THIS RETURNEN.
+maaaar: mss is dat wel mogelijk als we gwn een new builder returnen? !!!!
+EDIT:
+dit zou niets met return value te maken mogen hebben - is puur type system...
+
+compile-time-type of this has no type name, fml.
+
+Ik denk dat een method haar return type nooit kan afhangen van  de state van this.
+en t is puur de state die changed door option1/option2.
+TENZIJ je mss this als arg meegeeft?
+
+- returntype van optionx is fixed (vastgelegd dmv params)
+- returntype van stuff() is NIET type van this ...
+  moet wel type vd view zijn waarop self() wordt gecalled.
+  view is daar n collection of interfaces, en die kunnen we niet in variable extracten.
+
+
+
+
+- BaseBuilder<B extends BaseBuilder<B>>: B doStuff();
+- BuilderOption1<B extends BuilderOption1>: <R extends B> R option1();
+- BuilderOption2<B extends BuilderOption2>: <R extends B> R option2();
+
+
+doel:
+someBuilder()
+    .doStuff()
+    .doStuff()
+    .option1()
+    .option2() // compile-error
+    .option1()
+    .doStuff()
+    . ...
+
+kan enkel als builder returnt na .option1() een type heeft dat .option2() niet exposed.
+mag perfect over dezelfde builder gaan, en dat kunnen we al.
+het probleem is echter dat
+result.doStuff() dan terug een api returnt die option1() wel heeft.
+

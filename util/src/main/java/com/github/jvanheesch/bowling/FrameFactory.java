@@ -47,11 +47,6 @@ public class FrameFactory {
             return this.getRollsInternal().size() == 2 ||
                     this.getRollsInternal().size() == 1 && this.getRollsInternal().get(0) == 10;
         }
-
-        @Override
-        public int getNumberOfPinsCurrentlyStanding() {
-            return 10 - this.getTotalNumberOfPinsKnockedDown();
-        }
     }
 
     private static class FinalFrame extends AbstractFrame {
@@ -74,13 +69,6 @@ public class FrameFactory {
             return (this.getRollsInternal().size() == 2 &&
                     this.getTotalNumberOfPinsKnockedDown() < 10)
                     || this.getRollsInternal().size() == 3;
-        }
-
-        @Override
-        public int getNumberOfPinsCurrentlyStanding() {
-            int nbOfPinsCurrentlyKnockedDown = this.getTotalNumberOfPinsKnockedDown() % 10;
-
-            return 10 - nbOfPinsCurrentlyKnockedDown;
         }
     }
 }

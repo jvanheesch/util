@@ -15,5 +15,9 @@ public interface IFrame {
                 .sum();
     }
 
-    int getNumberOfPinsCurrentlyStanding();
+    default int getNumberOfPinsCurrentlyStanding() {
+        int nbOfPinsCurrentlyKnockedDown = this.getTotalNumberOfPinsKnockedDown() % 10;
+
+        return 10 - nbOfPinsCurrentlyKnockedDown;
+    }
 }

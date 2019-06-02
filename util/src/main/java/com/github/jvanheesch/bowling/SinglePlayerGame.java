@@ -40,30 +40,28 @@ public class SinglePlayerGame {
     }
 
     public int score() {
-        int sum = 0;
-        for (int i = 0; i <= this.frames.size() - 1; i++) {
-            IFrame ithFrame = this.frames.get(i);
-            int pinsInIthFrame = ithFrame.getTotalNumberOfPinsKnockedDown();
-            sum += pinsInIthFrame;
-            if (pinsInIthFrame == 10) {
-                // not the last frame
-                // alternatively: linkedlist, and last iff not hasNext()
-                // then no index is needed.
-                Optional<IFrame> nextFrame = getNextFrame(ithFrame);
-                if (nextFrame.isPresent()) {
-                    sum += Stream.iterate(nextFrame.get(), gr -> getNextFrame(gr).orElse(null))
-                            // TODO_JORIS: ugly hack to terminate, due to non-availability of takeWhile().
-                            .limit(100)
-                            .filter(Objects::nonNull)
-                            .flatMap(frame -> frame.getRolls().stream())
-                            .mapToInt(Integer::intValue)
-                            // TODO_JORIS: less 'robust' / expressive: not clear that only 1 & 2 are valid options.
-                            .limit(ithFrame.getRolls().size() == 1 ? 2 : 1)
-                            .sum();
-                }
-            }
-        }
-        return sum;
+        return this.frames.stream()
+                .mapToInt(frame -> {
+                            int score = frame.getTotalNumberOfPinsKnockedDown();
+
+                            if (score == 10) {
+                                Optional<IFrame> nextFrame = getNextFrame(frame);
+                                if (nextFrame.isPresent()) {
+                                    score += Stream.iterate(nextFrame.get(), gr -> getNextFrame(gr).orElse(null))
+                                            // TODO_JORIS: ugly hack to terminate, due to non-availability of takeWhile().
+                                            .limit(100)
+                                            .filter(Objects::nonNull)
+                                            .flatMap(fr -> fr.getRolls().stream())
+                                            .mapToInt(Integer::intValue)
+                                            // TODO_JORIS: less 'robust' / expressive: not clear that only 1 & 2 are valid options.
+                                            .limit(frame.getRolls().size() == 1 ? 2 : 1)
+                                            .sum();
+                                }
+                            }
+                            return score;
+                        }
+                )
+                .sum();
     }
 
     private Optional<IFrame> getNextFrame(IFrame frame) {

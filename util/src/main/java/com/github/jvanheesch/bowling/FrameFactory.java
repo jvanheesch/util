@@ -52,11 +52,11 @@ public class FrameFactory {
     private static class FinalFrame extends AbstractFrame {
         @Override
         public void roll(int numberOfPins) {
-            if (numberOfPins < 0) {
-                throw new IllegalArgumentException();
-            }
             if (this.isCompleted()) {
                 throw new IllegalStateException();
+            }
+            if (numberOfPins < 0) {
+                throw new IllegalArgumentException();
             }
             if (this.getRollsInternal().size() == 1 && this.getTotalNumberOfPinsKnockedDown() != 10) {
                 if (this.getTotalNumberOfPinsKnockedDown() + numberOfPins > 10) {

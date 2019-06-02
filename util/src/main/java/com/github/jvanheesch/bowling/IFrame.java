@@ -14,4 +14,6 @@ public interface IFrame {
                 .mapToInt(Integer::intValue)
                 .sum();
     }
+
+    int getNumberOfPinsCurrentlyStanding();
 }

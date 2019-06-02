@@ -35,7 +35,7 @@ public class FrameFactory {
             if (this.isCompleted()) {
                 throw new IllegalStateException();
             }
-            if (numberOfPins < 0 || numberOfPins > 10 - this.getTotalNumberOfPinsKnockedDown()) {
+            if (numberOfPins < 0 || numberOfPins > this.getNumberOfPinsCurrentlyStanding()) {
                 throw new IllegalArgumentException();
             }
 
@@ -46,6 +46,11 @@ public class FrameFactory {
         public boolean isCompleted() {
             return this.getRollsInternal().size() == 2 ||
                     this.getRollsInternal().size() == 1 && this.getRollsInternal().get(0) == 10;
+        }
+
+        @Override
+        public int getNumberOfPinsCurrentlyStanding() {
+            return 10 - this.getTotalNumberOfPinsKnockedDown();
         }
     }
 
@@ -58,16 +63,8 @@ public class FrameFactory {
             if (numberOfPins < 0) {
                 throw new IllegalArgumentException();
             }
-            if (this.getRollsInternal().size() == 1 && this.getTotalNumberOfPinsKnockedDown() != 10) {
-                if (this.getTotalNumberOfPinsKnockedDown() + numberOfPins > 10) {
-                    throw new IllegalArgumentException();
-                }
-            } else {
-                // TODO_JORIS: die check komt op teveel plaatsen voor.
-                // last frame = single frame, maar met mogelijk meerdere kegel resets -> model somehow!
-                if (numberOfPins > 10) {
-                    throw new IllegalArgumentException();
-                }
+            if (numberOfPins > this.getNumberOfPinsCurrentlyStanding()) {
+                throw new IllegalArgumentException();
             }
             this.getRollsInternal().add(numberOfPins);
         }
@@ -77,6 +74,13 @@ public class FrameFactory {
             return (this.getRollsInternal().size() == 2 &&
                     this.getTotalNumberOfPinsKnockedDown() < 10)
                     || this.getRollsInternal().size() == 3;
+        }
+
+        @Override
+        public int getNumberOfPinsCurrentlyStanding() {
+            int nbOfPinsCurrentlyKnockedDown = this.getTotalNumberOfPinsKnockedDown() % 10;
+
+            return 10 - nbOfPinsCurrentlyKnockedDown;
         }
     }
 }

@@ -43,10 +43,8 @@ public class SinglePlayerGame {
             int pinsInIthFrame = ithFrame.getTotalNumberOfPinsKnockedDown();
             sum += pinsInIthFrame;
             if (pinsInIthFrame == 10) {
-                // final frame, todo: fugly
-                if (i == 9) {
-
-                } else {
+                // not the last frame
+                if (i != 9) {
                     // nooit ioob omdat next-frame eagerly constructed wordt, todo: kan dit properder?
                     sum += this.frames.subList(i + 1, this.frames.size())
                             .stream()

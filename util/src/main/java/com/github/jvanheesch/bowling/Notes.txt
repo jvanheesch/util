@@ -33,6 +33,7 @@ two more balls. If you throw a spare, you get one more ball.
   alternatively:
   bowling = single player game, multiplayer == layer on top:
   composition of single player games.
+  EDIT: is niet volledig juist omdat je ook turns hebt en stuff
 -
 
 =====================================================================

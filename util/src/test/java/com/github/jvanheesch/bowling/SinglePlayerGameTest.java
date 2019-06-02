@@ -124,4 +124,41 @@ class SinglePlayerGameTest {
         assertThat(game.score())
                 .isEqualTo(10);
     }
+
+    @Test
+    void test_negative_roll() {
+        SinglePlayerGame game = new SinglePlayerGame();
+
+        game.roll(9);
+
+        assertThatThrownBy(() -> game.roll(-1))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void test_negative_roll_last_frame() {
+        SinglePlayerGame game = new SinglePlayerGame();
+
+        IntStream.generate(() -> 0)
+                .limit(18)
+                .forEach(game::roll);
+
+        assertThatThrownBy(() -> game.roll(-1))
+                .isInstanceOf(IllegalArgumentException.class);
+
+        game.roll(9);
+
+        assertThatThrownBy(() -> game.roll(-1))
+                .isInstanceOf(IllegalArgumentException.class);
+
+        game.roll(1);
+
+        assertThatThrownBy(() -> game.roll(-1))
+                .isInstanceOf(IllegalArgumentException.class);
+
+        game.roll(5);
+
+        assertThat(game.isFinished())
+                .isTrue();
+    }
 }

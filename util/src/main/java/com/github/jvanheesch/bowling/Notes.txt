@@ -17,6 +17,7 @@ om zo eenvoudig strike/spare score te berekenen.
 Immers, score ging niet in frames zitten.
 De list van commands kan zo op 2 manieren gebruikt worden:
 - aanmaken van frames (waarbij frame dient voor validatie van roll)
+                       + fe, anders zou t een throwaway object zijn
 - berekenen van score
 
 TODO command pattern?

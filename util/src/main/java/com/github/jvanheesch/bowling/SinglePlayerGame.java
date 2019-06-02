@@ -39,8 +39,8 @@ public class SinglePlayerGame {
     public int score() {
         int sum = 0;
         for (int i = 0; i <= this.frames.size() - 1; i++) {
-            IFrame iFrame = this.frames.get(i);
-            int pinsInIthFrame = iFrame.getTotalNumberOfPinsKnockedDown();
+            IFrame ithFrame = this.frames.get(i);
+            int pinsInIthFrame = ithFrame.getTotalNumberOfPinsKnockedDown();
             sum += pinsInIthFrame;
             if (pinsInIthFrame == 10) {
                 // final frame, todo: fugly
@@ -53,7 +53,7 @@ public class SinglePlayerGame {
                             .flatMap(frame -> frame.getRolls().stream())
                             .mapToInt(Integer::intValue)
                             // TODO_JORIS: less 'robust' / expressive: not clear that only 1 & 2 are valid options.
-                            .limit(iFrame.getRolls().size() == 1 ? 2 : 1)
+                            .limit(ithFrame.getRolls().size() == 1 ? 2 : 1)
                             .sum();
                 }
             }

@@ -58,6 +58,10 @@ x   x   x   x   x   x   x   x   x   x   x   x
 30  30  30  30  30  30  30  30  30  30
 30  60  90  120 150 180 210 240 270 300
 
+10th frame is no different from other frames, in that:
+strike/spare results in next 2/1 rolls being added.
+only difference is that those rolls don't initially "exist", and are part of the frame.
+
 =====================================================================
 strike & spare
 =====================================================================

@@ -19,12 +19,7 @@ public class FrameFactory {
 
         @Override
         public List<Integer> getRolls() {
-            return new ArrayList<>(this.getRollsInternal());
-        }
-
-        // TODO_JORIS attrocious
-        protected List<Integer> getRollsInternal() {
-            return this.rolls;
+            return new ArrayList<>(this.rolls);
         }
 
         @Override
@@ -36,24 +31,24 @@ public class FrameFactory {
                 throw new IllegalArgumentException();
             }
 
-            this.getRollsInternal().add(numberOfPins);
+            this.rolls.add(numberOfPins);
         }
     }
 
     private static class RegularFrame extends AbstractFrame {
         @Override
         public boolean isCompleted() {
-            return this.getRollsInternal().size() == 2 ||
-                    this.getRollsInternal().size() == 1 && this.getRollsInternal().get(0) == 10;
+            return this.getRolls().size() == 2 ||
+                    this.getRolls().size() == 1 && this.getRolls().get(0) == 10;
         }
     }
 
     private static class FinalFrame extends AbstractFrame {
         @Override
         public boolean isCompleted() {
-            return (this.getRollsInternal().size() == 2 &&
+            return (this.getRolls().size() == 2 &&
                     this.getTotalNumberOfPinsKnockedDown() < 10)
-                    || this.getRollsInternal().size() == 3;
+                    || this.getRolls().size() == 3;
         }
     }
 }

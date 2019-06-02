@@ -38,6 +38,7 @@ public class FrameFactory {
             if (this.isCompleted()) {
                 throw new IllegalStateException();
             }
+            // TODO_JORIS: command pattern & undo/rollback with immutability?
             if (this.getTotalNumberOfPinsKnockedDown() + numberOfPins > 10) {
                 throw new IllegalArgumentException();
             }
@@ -66,6 +67,8 @@ public class FrameFactory {
                     throw new IllegalArgumentException();
                 }
             } else {
+                // TODO_JORIS: die check komt op teveel plaatsen voor.
+                // last frame = single frame, maar met mogelijk meerdere kegel resets -> model somehow!
                 if (numberOfPins > 10) {
                     throw new IllegalArgumentException();
                 }

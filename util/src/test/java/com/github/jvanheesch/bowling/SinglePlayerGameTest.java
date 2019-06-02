@@ -110,4 +110,18 @@ class SinglePlayerGameTest {
         assertThatThrownBy(() -> game.roll(1))
                 .isInstanceOf(IllegalStateException.class);
     }
+
+    @Test
+    void test_invalid_frame_more_than_10_pins() {
+        SinglePlayerGame game = new SinglePlayerGame();
+
+        game.roll(4);
+
+        assertThatThrownBy(() -> game.roll(7))
+                .isInstanceOf(IllegalArgumentException.class);
+
+        game.roll(6);
+        assertThat(game.score())
+                .isEqualTo(10);
+    }
 }

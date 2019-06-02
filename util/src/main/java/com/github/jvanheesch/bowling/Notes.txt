@@ -1,3 +1,22 @@
+
+=====================================================================
+=====================================================================
+Stel elke roll is een command, dat on execute een frame gaat modifyen
+(en evt next frame createn)?
+Voordeel hierbij lijkt o.a. dat ik direct een list van rolls heb,
+om zo eenvoudig strike/spare score te berekenen.
+Immers, score ging niet in frames zitten.
+De list van commands kan zo op 2 manieren gebruikt worden:
+- aanmaken van frames (waarbij frame dient voor validatie van roll)
+- berekenen van score
+
+TODO command pattern?
+
+•••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+=====================================================================
+=====================================================================
+
+
 • Each games consists of ten frames. If you bowl a strike in the tenth frame, you get
 two more balls. If you throw a spare, you get one more ball.
 

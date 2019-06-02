@@ -44,6 +44,8 @@ public class SinglePlayerGame {
             sum += pinsInIthFrame;
             if (pinsInIthFrame == 10) {
                 // not the last frame
+                // alternatively: linkedlist, and last iff not hasNext()
+                // then no index is needed.
                 if (i != 9) {
                     // nooit ioob omdat next-frame eagerly constructed wordt, todo: kan dit properder?
                     sum += this.frames.subList(i + 1, this.frames.size())

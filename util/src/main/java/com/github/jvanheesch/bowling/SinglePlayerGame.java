@@ -45,10 +45,8 @@ public class SinglePlayerGame {
 
                             if (score == 10) {
                                 score += Stream.iterate(getNextFrame(frame), gr -> gr.flatMap(this::getNextFrame))
-                                        // TODO_JORIS: ugly hack to terminate, due to non-availability of takeWhile().
-                                        .limit(100)
-                                        .filter(Optional::isPresent)
-                                        .map(Optional::get)
+                                        .takeWhile(Optional::isPresent)
+                                        .flatMap(Optional::stream)
                                         .flatMap(fr -> fr.getRolls().stream())
                                         .mapToInt(Integer::intValue)
                                         // TODO_JORIS: less 'robust' / expressive: not clear that only 1 & 2 are valid options.

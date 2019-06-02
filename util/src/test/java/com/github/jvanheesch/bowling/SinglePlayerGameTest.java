@@ -44,4 +44,26 @@ class SinglePlayerGameTest {
         assertThatThrownBy(() -> game.roll(1))
                 .isInstanceOf(IllegalStateException.class);
     }
+
+    @Test
+    void test_score_first_roll_strike() {
+        SinglePlayerGame game = new SinglePlayerGame();
+
+        game.roll(10);
+
+        assertThat(game.score())
+                .isEqualTo(10);
+
+        game.roll(5);
+        assertThat(game.score())
+                .isEqualTo(20);
+
+        game.roll(3);
+        assertThat(game.score())
+                .isEqualTo(26);
+
+        game.roll(8);
+        assertThat(game.score())
+                .isEqualTo(34);
+    }
 }

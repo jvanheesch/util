@@ -26,4 +26,22 @@ class SinglePlayerGameTest {
         assertThatThrownBy(() -> game.roll(1))
                 .isInstanceOf(IllegalStateException.class);
     }
+
+    @Test
+    void test_all_rolls_miss() {
+        SinglePlayerGame game = new SinglePlayerGame();
+
+        IntStream.generate(() -> 0)
+                .limit(20)
+                .forEach(game::roll);
+
+        assertThat(game.score())
+                .isEqualTo(0);
+
+        assertThat(game.isFinished())
+                .isTrue();
+
+        assertThatThrownBy(() -> game.roll(1))
+                .isInstanceOf(IllegalStateException.class);
+    }
 }

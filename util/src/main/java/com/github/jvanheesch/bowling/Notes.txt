@@ -54,7 +54,7 @@ Enkel last frame staat op zichzelf qua score.
 TODO_JORIS:
 Moeten frame objects wel bestaan in 'database', of is dat gwn een frontend object?
 JA!! immers, een frame van 1 roll is ook een frame!@
-
+Bovendien: validatie van een roll is id context van een frame
 
 
 

@@ -15,6 +15,7 @@ public interface IFrame {
                 .sum();
     }
 
+    // TODO_JORIS: this is awkward because a spare/strike results in '10' rather than expected 0.
     default int getNumberOfPinsCurrentlyStanding() {
         int nbOfPinsCurrentlyKnockedDown = this.getTotalNumberOfPinsKnockedDown() % 10;
 

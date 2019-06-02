@@ -26,9 +26,6 @@ public class FrameFactory {
         protected List<Integer> getRollsInternal() {
             return this.rolls;
         }
-    }
-
-    private static class RegularFrame extends AbstractFrame {
 
         @Override
         public void roll(int numberOfPins) {
@@ -41,7 +38,9 @@ public class FrameFactory {
 
             this.getRollsInternal().add(numberOfPins);
         }
+    }
 
+    private static class RegularFrame extends AbstractFrame {
         @Override
         public boolean isCompleted() {
             return this.getRollsInternal().size() == 2 ||
@@ -50,20 +49,6 @@ public class FrameFactory {
     }
 
     private static class FinalFrame extends AbstractFrame {
-        @Override
-        public void roll(int numberOfPins) {
-            if (this.isCompleted()) {
-                throw new IllegalStateException();
-            }
-            if (numberOfPins < 0) {
-                throw new IllegalArgumentException();
-            }
-            if (numberOfPins > this.getNumberOfPinsCurrentlyStanding()) {
-                throw new IllegalArgumentException();
-            }
-            this.getRollsInternal().add(numberOfPins);
-        }
-
         @Override
         public boolean isCompleted() {
             return (this.getRollsInternal().size() == 2 &&

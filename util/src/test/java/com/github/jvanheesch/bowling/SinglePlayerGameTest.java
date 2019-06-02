@@ -66,4 +66,23 @@ class SinglePlayerGameTest {
         assertThat(game.score())
                 .isEqualTo(34);
     }
+
+    @Test
+    void test_score_first_roll_spare() {
+        SinglePlayerGame game = new SinglePlayerGame();
+
+        game.roll(9);
+        game.roll(1);
+
+        assertThat(game.score())
+                .isEqualTo(10);
+
+        game.roll(5);
+        assertThat(game.score())
+                .isEqualTo(20);
+
+        game.roll(3);
+        assertThat(game.score())
+                .isEqualTo(23);
+    }
 }

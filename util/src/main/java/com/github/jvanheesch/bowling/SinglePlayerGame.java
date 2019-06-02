@@ -2,6 +2,9 @@ package com.github.jvanheesch.bowling;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public class SinglePlayerGame {
     private final List<IFrame> frames;
@@ -46,10 +49,12 @@ public class SinglePlayerGame {
                 // not the last frame
                 // alternatively: linkedlist, and last iff not hasNext()
                 // then no index is needed.
-                if (i != 9) {
-                    // nooit ioob omdat next-frame eagerly constructed wordt, todo: kan dit properder?
-                    sum += this.frames.subList(i + 1, this.frames.size())
-                            .stream()
+                Optional<IFrame> nextFrame = getNextFrame(ithFrame);
+                if (nextFrame.isPresent()) {
+                    sum += Stream.iterate(nextFrame.get(), gr -> getNextFrame(gr).orElse(null))
+                            // TODO_JORIS: ugly hack to terminate, due to non-availability of takeWhile().
+                            .limit(100)
+                            .filter(Objects::nonNull)
                             .flatMap(frame -> frame.getRolls().stream())
                             .mapToInt(Integer::intValue)
                             // TODO_JORIS: less 'robust' / expressive: not clear that only 1 & 2 are valid options.
@@ -59,5 +64,13 @@ public class SinglePlayerGame {
             }
         }
         return sum;
+    }
+
+    private Optional<IFrame> getNextFrame(IFrame frame) {
+        int index = this.frames.indexOf(frame);
+
+        return index != -1 && index < this.frames.size() - 1
+                ? Optional.of(this.frames.get(index + 1))
+                : Optional.empty();
     }
 }

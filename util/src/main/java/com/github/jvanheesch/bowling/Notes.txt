@@ -1,0 +1,73 @@
+• Each games consists of ten frames. If you bowl a strike in the tenth frame, you get
+two more balls. If you throw a spare, you get one more ball.
+
+- single player = degenerate bowling GAME
+  alternatively:
+  bowling = single player game, multiplayer == layer on top:
+  composition of single player games.
+-
+
+=====================================================================
+quick maths
+=====================================================================
+1   2   3   4   5   6   7   8   9   10
+10  10  10  10  10  10  10  10  10  9
+x   x   x   x   x   x   x   x   x   x
+    x   x   x   x   x   x   x   x   x
+        x   x   x   x   x   x   x   x
+[10  20  30  30  30  30  30  30  30  27]
+30  30  30  30  30  30  30  29  19  9
+30  60  90  120 150 180 210 239 258 267
+
+1   2   3   4   5   6   7   8   9   10  11  12
+10  10  10  10  10  10  10  10  10  10  10  10
+x   x   x   x   x   x   x   x   x   x   x   x
+    x   x   x   x   x   x   x   x   x
+        x   x   x   x   x   x   x   x
+[10 20  30  30  30  30  30  30  30  30  20  10]
+30  30  30  30  30  30  30  30  30  30
+30  60  90  120 150 180 210 240 270 300
+
+=====================================================================
+strike & spare
+=====================================================================
+- strike:
+    - iff 10th frame: add 2 rolls
+    - count next 2 rolls
+- spare:
+    - iff 10th frame: add 1 roll
+    - count next roll
+Deze extra rolls vormen geen frame blijkbaar?
+http://i.imgur.com/cghZ0.jpg
+last frame is dan gewoon XXX
+
+=====================================================================
+brainstorm
+=====================================================================
+-framebuilder for stepwise construction?
+Ik zou een frame laten bestaan uit de feiten:
+- frame number
+- rolls
+en de score achteraf computen, owv relatie tss frames.
+Enkel last frame staat op zichzelf qua score.
+
+TODO_JORIS:
+Moeten frame objects wel bestaan in 'database', of is dat gwn een frontend object?
+JA!! immers, een frame van 1 roll is ook een frame!@
+
+
+
+
+=====================================================================
+frame-validation
+=====================================================================
+- if(alreadyCompleted) => throw exc.
+
+1-9:
+- total nb of pins knocked down <= 10
+
+10th frame:
+- if 2nd roll and first was not 10:
+  total nb of pins knocked down <= 10
+- if first or 3rd roll:
+  number < 10

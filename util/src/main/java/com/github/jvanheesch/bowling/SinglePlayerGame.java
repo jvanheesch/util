@@ -79,41 +79,4 @@ public class SinglePlayerGame {
         }
         return sum;
     }
-
-    public static void main(String[] args) {
-        perfectGame();
-        nearPerfectGame();
-    }
-
-    private static void perfectGame() {
-        SinglePlayerGame game = new SinglePlayerGame();
-        game.roll(10);
-        game.roll(10);
-        game.roll(10);
-        game.roll(10);
-        game.roll(10);
-        game.roll(10);
-        game.roll(10);
-        game.roll(10);
-        game.roll(10);
-        game.roll(10);
-        game.roll(10);
-        game.roll(10);
-        System.out.println(game.score());
-    }
-
-    private static void nearPerfectGame() {
-        SinglePlayerGame game = new SinglePlayerGame();
-        game.roll(10);
-        game.roll(10);
-        game.roll(10);
-        game.roll(10);
-        game.roll(10);
-        game.roll(10);
-        game.roll(10);
-        game.roll(10);
-        game.roll(10);
-        game.roll(9);
-        System.out.println(game.score());
-    }
 }

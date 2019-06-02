@@ -44,10 +44,11 @@ public class SinglePlayerGame {
                             int score = frame.getTotalNumberOfPinsKnockedDown();
 
                             if (score == 10) {
-                                score += Stream.iterate(getNextFrame(frame), gr -> gr.flatMap(this::getNextFrame))
+                                score += Stream.iterate(getNextFrame(frame), optionalNextFrame -> optionalNextFrame.flatMap(this::getNextFrame))
                                         .takeWhile(Optional::isPresent)
                                         .flatMap(Optional::stream)
-                                        .flatMap(fr -> fr.getRolls().stream())
+                                        .map(IFrame::getRolls)
+                                        .flatMap(List::stream)
                                         .mapToInt(Integer::intValue)
                                         // TODO_JORIS: less 'robust' / expressive: not clear that only 1 & 2 are valid options.
                                         .limit(frame.getRolls().size() == 1 ? 2 : 1)

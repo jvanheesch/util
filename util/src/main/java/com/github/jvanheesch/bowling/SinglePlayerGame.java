@@ -2,7 +2,6 @@ package com.github.jvanheesch.bowling;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class SinglePlayerGame {
     private final List<IFrame> frames;
@@ -49,19 +48,13 @@ public class SinglePlayerGame {
 
                 } else {
                     // nooit ioob omdat next-frame eagerly constructed wordt, todo: kan dit properder?
-                    IntStream nextRolls = this.frames.subList(i + 1, this.frames.size())
+                    sum += this.frames.subList(i + 1, this.frames.size())
                             .stream()
                             .flatMap(frame -> frame.getRolls().stream())
-                            .mapToInt(Integer::intValue);
-                    if (iFrame.getRolls().size() == 1) {
-                        nextRolls = nextRolls.limit(2);
-                    } else if (iFrame.getRolls().size() == 2) {
-                        nextRolls = nextRolls.limit(1);
-                    } else {
-                        throw new IllegalStateException();
-                    }
-
-                    sum += nextRolls.sum();
+                            .mapToInt(Integer::intValue)
+                            // TODO_JORIS: less 'robust' / expressive: not clear that only 1 & 2 are valid options.
+                            .limit(iFrame.getRolls().size() == 1 ? 2 : 1)
+                            .sum();
                 }
             }
         }

@@ -2,7 +2,6 @@ package com.github.jvanheesch.bowling;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -45,18 +44,16 @@ public class SinglePlayerGame {
                             int score = frame.getTotalNumberOfPinsKnockedDown();
 
                             if (score == 10) {
-                                Optional<IFrame> nextFrame = getNextFrame(frame);
-                                if (nextFrame.isPresent()) {
-                                    score += Stream.iterate(nextFrame.get(), gr -> getNextFrame(gr).orElse(null))
-                                            // TODO_JORIS: ugly hack to terminate, due to non-availability of takeWhile().
-                                            .limit(100)
-                                            .filter(Objects::nonNull)
-                                            .flatMap(fr -> fr.getRolls().stream())
-                                            .mapToInt(Integer::intValue)
-                                            // TODO_JORIS: less 'robust' / expressive: not clear that only 1 & 2 are valid options.
-                                            .limit(frame.getRolls().size() == 1 ? 2 : 1)
-                                            .sum();
-                                }
+                                score += Stream.iterate(getNextFrame(frame), gr -> gr.flatMap(this::getNextFrame))
+                                        // TODO_JORIS: ugly hack to terminate, due to non-availability of takeWhile().
+                                        .limit(100)
+                                        .filter(Optional::isPresent)
+                                        .map(Optional::get)
+                                        .flatMap(fr -> fr.getRolls().stream())
+                                        .mapToInt(Integer::intValue)
+                                        // TODO_JORIS: less 'robust' / expressive: not clear that only 1 & 2 are valid options.
+                                        .limit(frame.getRolls().size() == 1 ? 2 : 1)
+                                        .sum();
                             }
                             return score;
                         }

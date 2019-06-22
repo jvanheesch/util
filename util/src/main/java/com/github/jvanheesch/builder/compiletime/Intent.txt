@@ -45,3 +45,10 @@ mag perfect over dezelfde builder gaan, en dat kunnen we al.
 het probleem is echter dat
 result.doStuff() dan terug een api returnt die option1() wel heeft.
 
+
+Recent idea:
+- if builder needs to return a type that exposes all its currently exposed methods, we may
+  not need a type for each such combination, if we can somehow use generics to reduce the api.
+  example:
+  List<?> does not support add operation, only get.
+  The problem, however, is that the add method is still present - compiler just won't accept any non-null arg.

@@ -67,3 +67,4 @@ Also nog steeds t issue:
      currentObject.optionX() returnt een type dat optionY() AL DAN NIET exposed.
      die AL DAN NIET hangt af van de state, i.e. de prev method calls.
      -> kunnen we dit wel in type system gieten?
+        op zen minst deels - zie existing SomeBuilder !!

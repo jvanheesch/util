@@ -2,6 +2,9 @@ package com.github.jvanheesch.builder.vehicle.improved;
 
 import com.github.jvanheesch.builder.compiletime.BaseBuilder;
 
+/**
+ * TERMINAL approach kinda defeats the purpose, class explosion made place for type param explosion.
+ */
 public class ImprovedCarBuilder<
         BEIGE_AND_RED extends Red<AUDI_AND_BMW> & Beige<AUDI_AND_BMW> & BaseBuilder<AUDI_AND_BMW>,
         BEIGE_AND_RED_TERMINAL extends Red<Void> & Beige<Void> & BaseBuilder<AUDI_AND_BMW>,

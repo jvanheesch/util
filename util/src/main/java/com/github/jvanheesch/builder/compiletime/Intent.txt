@@ -93,7 +93,7 @@ new CarBuilder()
 .build()
 In this case, the solution is rather trivial: the bmw() method could return a builder of the same type as this (CarBuilder),
 minus the bmw() method.
-This is a relatively simpel case - the "execute-at-most-once" constraint.
+This is a relatively simple case - the "execute-at-most-once" constraint.
 I want more advanced cases however, for example:
 if .bmw() and .sport() have already been called, .beige() should not be exposed,
 as bmw doesn't have any beige sport cars.

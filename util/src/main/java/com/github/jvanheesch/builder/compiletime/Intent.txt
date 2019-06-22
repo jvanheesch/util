@@ -72,3 +72,4 @@ Also nog steeds t issue:
         de magic is als volgt:
         doStuff() heeft return type dat parameterized is,
         en option1() en option2() returnen een builder waarbij die type een verschillende waarde heeft.
+        Het enige issue waar we momenteel nog mee zitten, is dat dit type fixed is @ compile time.

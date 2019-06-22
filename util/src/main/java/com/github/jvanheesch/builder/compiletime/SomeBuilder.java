@@ -1,9 +1,5 @@
 package com.github.jvanheesch.builder.compiletime;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
-import java.util.regex.Pattern;
-
 public class SomeBuilder<
         B1 extends BuilderOption1<B1> & BaseBuilder<B1>,
         B2 extends BuilderOption2<B2> & BaseBuilder<B2>
@@ -25,7 +21,7 @@ public class SomeBuilder<
 
     @Override
     public <R extends B2> R option2() {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     public static void main(String[] args) {

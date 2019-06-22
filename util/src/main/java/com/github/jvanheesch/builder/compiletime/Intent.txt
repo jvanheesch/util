@@ -52,3 +52,18 @@ Recent idea:
   example:
   List<?> does not support add operation, only get.
   The problem, however, is that the add method is still present - compiler just won't accept any non-null arg.
+  Stel ff:
+  Builder<Interface1, Interface2>
+  en builder<?, Interface2> kan enkel methods uit interface2 oproepen
+  -> todo: type of result after calling such method?
+
+Die generics stuff zou werken als we een clazz hadden waarvoor:
+SomeClass<T> has same interface as T, but this is obviously not the case.
+
+Also nog steeds t issue:
+- return type ligt vast @ compile time
+- return type moet afhangen van state
+  -> we bedoelen:
+     currentObject.optionX() returnt een type dat optionY() AL DAN NIET exposed.
+     die AL DAN NIET hangt af van de state, i.e. de prev method calls.
+     -> kunnen we dit wel in type system gieten?

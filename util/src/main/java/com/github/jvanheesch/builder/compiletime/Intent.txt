@@ -73,3 +73,34 @@ Also nog steeds t issue:
         doStuff() heeft return type dat parameterized is,
         en option1() en option2() returnen een builder waarbij die type een verschillende waarde heeft.
         Het enige issue waar we momenteel nog mee zitten, is dat dit type fixed is @ compile time.
+
+========================================================================================================
+INITIAL GOAL
+========================================================================================================
+Using builders for object construction is cool, example:
+new CarBuilder()
+.bmw()
+.sport()
+.red()
+.build()
+or whatever - I don't know shit about cars.
+What I want, however, is a builder that prevents certain "errors" @ compile time, such as:
+new CarBuilder()
+.bmw()
+.sport()
+.red()
+.bmw() // already set the type - don't want this method to be exposed anymore => I want a compilation error !!
+.build()
+In this case, the solution is rather trivial: the bmw() method could return a builder of the same type as this (CarBuilder),
+minus the bmw() method.
+This is a relatively simpel case - the "execute-at-most-once" constraint.
+I want more advanced cases however, for example:
+if .bmw() and .sport() have already been called, .beige() should not be exposed,
+as bmw doesn't have any beige sport cars.
+Audi does, however, so
+new CarBuilder()
+.audi()
+.sport()
+.beige()
+.build()
+should still work.

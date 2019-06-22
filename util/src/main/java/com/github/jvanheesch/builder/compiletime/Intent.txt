@@ -68,3 +68,7 @@ Also nog steeds t issue:
      die AL DAN NIET hangt af van de state, i.e. de prev method calls.
      -> kunnen we dit wel in type system gieten?
         op zen minst deels - zie existing SomeBuilder !!
+        t is te zeggen:
+        de magic is als volgt:
+        doStuff() heeft return type dat parameterized is,
+        en option1() en option2() returnen een builder waarbij die type een verschillende waarde heeft.

@@ -1,8 +1,6 @@
 package com.github.jvanheesch.builder.vehicle.improved;
 
 import com.github.jvanheesch.builder.compiletime.BaseBuilder;
-import com.github.jvanheesch.builder.compiletime.BuilderOption1;
-import com.github.jvanheesch.builder.compiletime.BuilderOption2;
 
 public class ImprovedCarBuilder<
         BEIGE_AND_RED extends Red<AUDI_AND_BMW> & Beige<AUDI_AND_BMW> & BaseBuilder<AUDI_AND_BMW>,
@@ -12,18 +10,35 @@ public class ImprovedCarBuilder<
         implements
         Audi<BEIGE_AND_RED_TERMINAL>,
         Bmw<BEIGE_AND_RED_TERMINAL>,
+        Red<AUDI_AND_BMW_TERMINAL>,
+        Beige<AUDI_AND_BMW_TERMINAL>,
         BaseBuilder<ImprovedCarBuilder<BEIGE_AND_RED, BEIGE_AND_RED_TERMINAL, AUDI_AND_BMW, AUDI_AND_BMW_TERMINAL>> {
 
+    // return (R) this;
+    // won't compile, because now 'this' has two red methods:
+    // 1 returning AUDI_AND_BMW, the other returning void
     @Override
     public <R extends BEIGE_AND_RED_TERMINAL> R audi() {
         System.out.println("SomeBuilder.audi");
-        return (R) this;
+        return null;
     }
 
     @Override
     public <R extends BEIGE_AND_RED_TERMINAL> R bmw() {
         System.out.println("SomeBuilder.bmw");
-        return (R) this;
+        return null;
+    }
+
+    @Override
+    public <R extends AUDI_AND_BMW_TERMINAL> R red() {
+        System.out.println("SomeBuilder.red");
+        return null;
+    }
+
+    @Override
+    public <R extends AUDI_AND_BMW_TERMINAL> R beige() {
+        System.out.println("SomeBuilder.beige");
+        return null;
     }
 
     @Override
@@ -32,24 +47,12 @@ public class ImprovedCarBuilder<
     }
 
     public static void main(String[] args) {
-        ImprovedCarBuilder<?, ?, ?, ?> builder = new ImprovedCarBuilder<>();
-
-        BuilderOption1<?> o1 = builder.audi();
-        // o1.option1().option2();
-
-        BuilderOption2<?> o2 = builder.bmw();
-        // o2.bmw().option1();
         new ImprovedCarBuilder<>()
                 .doStuff()
                 .audi()
-                //. .audi() does not compile
+                .red();
+        new ImprovedCarBuilder<>()
                 .red()
-                // .red() does not compile
-//                .audi() // -> we want this NOT to compile !!
-//                .red()
-//                .doStuff()
-//                // .option2() // does not compile
-//                .audi()
-        ;
+                .bmw();
     }
 }

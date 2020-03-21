@@ -4,8 +4,8 @@ import java.util.Optional;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-public final class CollectorFactory {
-    private CollectorFactory() {
+public final class MyCollectors {
+    private MyCollectors() {
     }
 
     public static <T> Collector<T, ?, T> toUniqueElement() {

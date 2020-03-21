@@ -25,8 +25,8 @@
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <version>${assertj.version}</version>
+            <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
@@ -38,22 +38,9 @@
             <version>3.1.0</version>
             <optional>true</optional>
         </dependency>
-        <!--TODO_JORIS: this is shitty - but i don't want util to contain log4j-->
-        <!--IOStreams should probably be in separate artifact for logging. -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-iostreams</artifactId>
-            <version>${log4j.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.logging.log4j</groupId>
-                    <artifactId>log4j-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
             <version>${log4j.version}</version>
             <optional>true</optional>
         </dependency>

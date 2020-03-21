@@ -8,16 +8,16 @@ public final class MyCollectors {
     private MyCollectors() {
     }
 
-    public static <T> Collector<T, ?, T> toUniqueElement() {
+    public static <T> Collector<T, ?, T> toSingleElement() {
         return Collectors.collectingAndThen(
-                toUniqueOptional(),
+                toSingleOptional(),
                 optionalResult -> optionalResult.<IllegalStateException>orElseThrow(() -> {
                     throw new IllegalStateException("The stream was empty!");
                 })
         );
     }
 
-    public static <T> Collector<T, ?, Optional<T>> toUniqueOptional() {
+    public static <T> Collector<T, ?, Optional<T>> toSingleOptional() {
         return Collectors.reducing((a, b) -> {
             throw new IllegalStateException("The stream contained more than 1 element!");
         });

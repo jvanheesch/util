@@ -1,4 +1,4 @@
-package com.github.jvanheesch.wicket;
+package com.github.jvanheesch;
 
 import org.apache.wicket.model.IModel;
 import org.danekja.java.util.function.serializable.SerializableBiConsumer;

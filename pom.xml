@@ -13,6 +13,7 @@
         <module>spring-autoconfiguration</module>
         <module>util</module>
         <module>test-util</module>
+        <module>wicket-util</module>
     </modules>
 
     <properties>
